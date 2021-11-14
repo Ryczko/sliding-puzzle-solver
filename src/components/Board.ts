@@ -10,6 +10,7 @@ export class Board {
         this.generetePuzzles();
         this.puzzleBox.addEventListener('click', (e) => this.handleUserClick(e));
         this.emptyFieldIndex = this.rowsCount * this.columnsCount - 1;
+        this.shuffleBoard();
     }
 
     createBoard(): void {
@@ -18,6 +19,36 @@ export class Board {
         this.puzzleBox.style.height = `${this.size}px`;
         this.puzzleBox.style.width = `${this.size}px`;
         document.body.appendChild(this.puzzleBox);
+    }
+
+    shuffleBoard(numberOfShuffles = 15 * this.rowsCount * this.columnsCount): void {
+        for (let i = 0; i < numberOfShuffles; i++) {
+            const emptyRow = this.getRowNumber(this.emptyFieldIndex);
+            const emptyColumn = this.getColumnNumber(this.emptyFieldIndex);
+            const options = [];
+
+            if (this.getRowNumber(this.emptyFieldIndex - 1) === emptyRow) options.push(this.emptyFieldIndex - 1);
+            if (this.getRowNumber(this.emptyFieldIndex + 1) === emptyRow) options.push(this.emptyFieldIndex + 1);
+            if (
+                this.emptyFieldIndex + this.columnsCount < this.columnsCount * this.rowsCount &&
+                this.getColumnNumber(this.emptyFieldIndex + this.columnsCount) === emptyColumn
+            )
+                options.push(this.emptyFieldIndex + this.columnsCount);
+            if (
+                this.emptyFieldIndex - this.columnsCount >= 0 &&
+                this.getColumnNumber(this.emptyFieldIndex - this.columnsCount) === emptyColumn
+            )
+                options.push(this.emptyFieldIndex - this.columnsCount);
+
+            const randomMove = Math.floor(Math.random() * options.length);
+
+            this.moveElement(
+                this.gameState[this.emptyFieldIndex].getPuzzle(),
+                this.gameState[options[randomMove]].getPuzzle()
+            );
+            this.swapPuzzle(this.emptyFieldIndex, options[randomMove]);
+            this.emptyFieldIndex = options[randomMove];
+        }
     }
 
     generetePuzzles(): void {

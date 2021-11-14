@@ -11,7 +11,9 @@ export class Puzzle {
         this.puzzle = document.createElement('div');
         this.puzzle.style.width = this.size + 'px';
         this.puzzle.style.height = this.size + 'px';
-        if (this.value) this.puzzle.textContent = this.value.toString();
+
+        //add in future optional value showing
+        //if (this.value) this.puzzle.textContent = this.value.toString();
 
         this.puzzle.dataset.value = this.value.toString();
 
