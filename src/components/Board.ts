@@ -3,12 +3,13 @@ import { Puzzle } from './Puzzle';
 export class Board {
     puzzleBox: HTMLElement;
     gameState: Puzzle[] = [];
-    emptyFieldIndex = 0;
+    emptyFieldIndex: number;
 
     constructor(private size: number, private rowsCount = 3, private columnsCount = 3, private imageSrc: string) {
         this.createBoard();
         this.generetePuzzles();
         this.puzzleBox.addEventListener('click', (e) => this.handleUserClick(e));
+        this.emptyFieldIndex = this.rowsCount * this.columnsCount - 1;
     }
 
     createBoard(): void {
@@ -20,14 +21,24 @@ export class Board {
     }
 
     generetePuzzles(): void {
-        for (let i = 0; i < this.rowsCount * this.columnsCount; i++) {
-            const row = this.getRowNumber(i);
-            const column = this.getColumnNumber(i);
+        for (let i = 1; i < this.rowsCount * this.columnsCount; i++) {
+            const row = this.getRowNumber(i - 1);
+            const column = this.getColumnNumber(i - 1);
 
             const newPuzzle = new Puzzle(i, this.size / this.columnsCount, row, column, this.imageSrc);
             this.gameState.push(newPuzzle);
             this.puzzleBox.appendChild(newPuzzle.getPuzzle());
         }
+
+        const newPuzzle = new Puzzle(
+            0,
+            this.size / this.columnsCount,
+            this.rowsCount - 1,
+            this.columnsCount - 1,
+            this.imageSrc
+        );
+        this.gameState.push(newPuzzle);
+        this.puzzleBox.appendChild(newPuzzle.getPuzzle());
     }
 
     handleUserClick(event: Event): void {

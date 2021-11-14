@@ -11,7 +11,8 @@ export class Puzzle {
         this.puzzle = document.createElement('div');
         this.puzzle.style.width = this.size + 'px';
         this.puzzle.style.height = this.size + 'px';
-        this.puzzle.textContent = this.value.toString();
+        if (this.value) this.puzzle.textContent = this.value.toString();
+
         this.puzzle.dataset.value = this.value.toString();
 
         this.puzzle.style.top = `${this.x * this.size}px`;
