@@ -23,6 +23,7 @@
     "@babel/preset-env": "^7.12.11",
     "@babel/preset-typescript": "^7.12.7",
     "@types/jest": "^26.0.20",
+    "@types/lodash": "^4.14.178",
     "@types/node": "^14.14.22",
     "@types/webpack": "^4.41.26",
     "@typescript-eslint/eslint-plugin": "^4.14.1",
@@ -58,5 +59,8 @@
     "collectCoverageFrom": [
       "./src/**"
     ]
+  },
+  "dependencies": {
+    "lodash": "^4.17.21"
   }
 }
