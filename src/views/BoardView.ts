@@ -2,17 +2,34 @@ import { Board } from '../components/Board';
 import { getColumnNumber } from '../utilities/getColumnNumber';
 import { getRowNumber } from '../utilities/getRowNumber';
 import { PuzzleView } from './PuzzleView';
+import JSConfetti from 'js-confetti';
 
 export class BoardView {
     puzzleBox: HTMLElement;
+    wrapper = document.querySelector('.wrapper');
+    showHelpers: boolean;
+    confetti: JSConfetti;
+    isSolving: boolean;
 
     constructor(private board: Board, private size: number, private imageSrc: string) {
+        this.wrapper = document.querySelector('.wrapper');
+        this.confetti = new JSConfetti();
+
         this.createBoard();
         this.generetePuzzles();
         this.puzzleBox.addEventListener('click', (e) => this.handleUserClick(e));
     }
 
+    setSize(size: number): void {
+        this.size = size;
+        this.puzzleBox.style.height = `${this.size}px`;
+        this.puzzleBox.style.width = `${this.size}px`;
+
+        this.generetePuzzles();
+    }
+
     generetePuzzles(): void {
+        this.puzzleBox.innerHTML = '';
         this.board.gameState.forEach((puzzle) => {
             const { x, y, value } = puzzle;
 
@@ -26,7 +43,8 @@ export class BoardView {
                 y,
                 imageX,
                 imageY,
-                this.imageSrc
+                this.imageSrc,
+                this.showHelpers
             );
 
             this.puzzleBox.appendChild(puzzleView.puzzle);
@@ -38,10 +56,12 @@ export class BoardView {
         this.puzzleBox.id = 'board';
         this.puzzleBox.style.height = `${this.size}px`;
         this.puzzleBox.style.width = `${this.size}px`;
-        document.body.appendChild(this.puzzleBox);
+        this.wrapper.appendChild(this.puzzleBox);
     }
 
     handleUserClick(event: Event): void {
+        if (this.isSolving) return;
+
         const target = event.target as HTMLElement;
         if (!target.classList.contains('puzzle')) return;
         const index = this.board.gameState.map((el) => el.value).indexOf(+target.dataset.value);
@@ -71,6 +91,10 @@ export class BoardView {
             setTimeout(() => {
                 this.moveElement(this.board.gameState[moveIndex].value, 0);
                 this.board.makeMove(moveIndex);
+                if (i === movesIndexes.length - 1) {
+                    this.confetti.addConfetti({ confettiColors: ['#FFFFFF', '#272727', '#3E3E3E', '#7CA6CB'] });
+                    this.isSolving = false;
+                }
             }, 150 * i);
         });
     }

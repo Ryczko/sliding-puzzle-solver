@@ -1,20 +1,11 @@
-import { BoardView } from '../views/BoardView';
 import { Board } from './Board';
 import { BoardNode } from './BoardNode';
 import { PriorityQueue } from './PriorityQueue';
 
 export class Solver {
-    constructor(private board: Board, private boardView: BoardView) {
-        this.createSolveButton();
-    }
-
-    createSolveButton(): void {
-        const btn = document.createElement('button');
-        btn.addEventListener('click', () => {
-            this.boardView.animateSolving(this.solve());
-        });
-        btn.textContent = 'solve';
-        document.body.appendChild(btn);
+    wrapper = document.querySelector('.wrapper');
+    constructor(private board: Board) {
+        this.wrapper = document.querySelector('.wrapper');
     }
 
     solve(): number[] {

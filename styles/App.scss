@@ -1,29 +1,31 @@
 * {
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
     outline: none;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 body {
     background-color: rgb(14, 14, 14);
-    height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
 #board {
+    margin-top: 40px;
     display: flex;
     flex-wrap: wrap;
     position: relative;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    overflow: hidden;
+    border-radius: 6px;
 }
 
 .puzzle {
     position: absolute;
     cursor: pointer;
-    color: rgb(83, 83, 83);
+    color: white;
     transition: top 0.15s linear, left 0.15s linear;
     display: flex;
     align-items: center;
@@ -31,7 +33,35 @@ body {
     font-size: 36px;
     height: 50px;
     width: 50px;
+
     &[data-value='0'] {
         background: transparent !important;
+        cursor: default;
+    }
+}
+
+.buttons-panel {
+    display: flex;
+    flex-direction: column;
+    margin-top: 6px;
+
+    button {
+        margin: 4px 0;
+        padding: 12px 24px;
+        border: 0;
+        text-decoration: none;
+        border-radius: 6px;
+        background-color: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(30px);
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 14px;
+        letter-spacing: 2px;
+        cursor: pointer;
+        text-transform: uppercase;
+
+        &:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
     }
 }

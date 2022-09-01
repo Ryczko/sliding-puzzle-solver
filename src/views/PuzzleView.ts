@@ -8,7 +8,8 @@ export class PuzzleView {
         public y: number,
         public imageX: number,
         public imageY: number,
-        private image: string
+        private image: string,
+        public showHelpers: boolean = false
     ) {
         this.createPuzzle();
     }
@@ -18,8 +19,7 @@ export class PuzzleView {
         this.puzzle.style.width = this.size + 'px';
         this.puzzle.style.height = this.size + 'px';
 
-        //add in future optional value showing
-        if (this.value) this.puzzle.textContent = this.value.toString();
+        if (this.value && this.showHelpers) this.puzzle.textContent = this.value.toString();
 
         this.puzzle.dataset.value = this.value.toString();
 

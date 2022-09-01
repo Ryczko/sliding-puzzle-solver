@@ -35,5 +35,8 @@ module.exports = {
         filename: 'bundle.js',
         path: path.resolve(__dirname, 'dist')
     },
-    plugins: [new CleanWebpackPlugin(), new HtmlWebpackPlugin({ template: './src/index.html' })]
+    plugins: [
+        new CleanWebpackPlugin(),
+        new HtmlWebpackPlugin({ template: './src/index.html', favicon: './src/favicon.ico' })
+    ]
 };
