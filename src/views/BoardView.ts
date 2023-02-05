@@ -97,5 +97,7 @@ export class BoardView {
                 }
             }, 150 * i);
         });
+
+        if (movesIndexes.length === 0) this.isSolving = false;
     }
 }

@@ -27,7 +27,10 @@ export class BoardNode {
 
     getPath(): number[] {
         let next = this.parent;
-        const path = [this.moveIndex];
+        const path = [];
+        if (this.moveIndex !== -1) {
+            path.push(this.moveIndex);
+        }
         while (next && next.moveIndex !== -1) {
             path.push(next.moveIndex);
             next = next.parent;
