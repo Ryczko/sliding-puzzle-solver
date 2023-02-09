@@ -36,10 +36,12 @@ export class ButtonsView {
 
     createSolveButton(): void {
         const btn = document.createElement('button');
-        btn.addEventListener('click', () => {
+        btn.addEventListener('click', async () => {
             if (this.boardView.isSolving) return;
             this.boardView.isSolving = true;
-            this.boardView.animateSolving(this.sovler.solve());
+            const movesIndexes = await this.sovler.solve();
+
+            this.boardView.animateSolving(movesIndexes);
         });
         btn.textContent = 'solve';
         this.buttonsPanel.appendChild(btn);
@@ -48,6 +50,12 @@ export class ButtonsView {
     createShowHelpersButton(): void {
         const btn = document.createElement('button');
         btn.addEventListener('click', () => {
+            if (!this.boardView.showHelpers) {
+                btn.textContent = 'hide helpers';
+            } else {
+                btn.textContent = 'show helpers';
+            }
+
             this.boardView.showHelpers = !this.boardView.showHelpers;
             this.boardView.generetePuzzles();
         });

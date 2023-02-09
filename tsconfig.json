@@ -6,9 +6,12 @@
     "preserveConstEnums": true,
     "removeComments": true,
     "target": "es5",
+    "module": "esnext",
+    "moduleResolution": "Node",
     "allowJs": true,
     "sourceMap": true,
     "allowSyntheticDefaultImports": true,
+    "lib": ["es6", "dom", "webworker"],
   },
   "include": ["src/**/*", "index.d.ts"],
   "exclude": ["node_modules"]

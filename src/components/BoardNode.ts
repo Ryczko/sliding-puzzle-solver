@@ -44,8 +44,8 @@ export class BoardNode {
         for (let i = 0; i < this.board.gameState.length; i++) {
             if (!this.board.gameState[i].value) continue;
 
-            const correctPlaceRow = getRowNumber(this.board.gameState[i].value - 1, this.board.rowsCount);
-            const correctPlaceColumn = getColumnNumber(this.board.gameState[i].value - 1, this.board.rowsCount);
+            const correctPlaceRow = getRowNumber(this.board.gameState[i].value - 1, this.board.gridSize);
+            const correctPlaceColumn = getColumnNumber(this.board.gameState[i].value - 1, this.board.gridSize);
             hValue +=
                 Math.abs(correctPlaceRow - this.board.gameState[i].x) +
                 Math.abs(correctPlaceColumn - this.board.gameState[i].y);

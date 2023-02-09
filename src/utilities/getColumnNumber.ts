@@ -1,3 +1,3 @@
-export function getColumnNumber(index: number | string, columnsCount: number): number {
-    return +index % columnsCount;
+export function getColumnNumber(index: number | string, gridSize: number): number {
+    return +index % gridSize;
 }

@@ -1,3 +1,3 @@
-export function getRowNumber(index: number | string, columnsCount: number): number {
-    return Math.floor(+index / columnsCount);
+export function getRowNumber(index: number | string, gridSize: number): number {
+    return Math.floor(+index / gridSize);
 }

@@ -12,7 +12,7 @@ function getBoardWidth(): number {
 
 const boardWidth = getBoardWidth();
 
-const board = new Board(3, 3);
+const board = new Board(3);
 const boardView = new BoardView(board, boardWidth, image);
 const solver = new Solver(board);
 new ButtonsView(boardView, solver, board);

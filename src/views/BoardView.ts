@@ -33,12 +33,12 @@ export class BoardView {
         this.board.gameState.forEach((puzzle) => {
             const { x, y, value } = puzzle;
 
-            const imageX = getRowNumber(value - 1, this.board.columnsCount);
-            const imageY = getColumnNumber(value - 1, this.board.columnsCount);
+            const imageX = getRowNumber(value - 1, this.board.gridSize);
+            const imageY = getColumnNumber(value - 1, this.board.gridSize);
 
             const puzzleView = new PuzzleView(
                 value,
-                this.size / this.board.columnsCount,
+                this.size / this.board.gridSize,
                 x,
                 y,
                 imageX,

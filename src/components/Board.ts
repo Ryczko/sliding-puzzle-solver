@@ -6,12 +6,17 @@ export class Board {
     gameState: Puzzle[] = [];
     emptyFieldIndex: number;
 
-    constructor(public rowsCount = 3, public columnsCount = 3) {
+    constructor(public gridSize = 3, gameStateToLoad?: Puzzle[]) {
+        if (gameStateToLoad) {
+            this.gameState = gameStateToLoad.map((puzzle) => new Puzzle(puzzle.value, puzzle.x, puzzle.y));
+            this.emptyFieldIndex = this.gameState.findIndex((puzzle) => puzzle.value === 0);
+            return;
+        }
         this.generetePuzzles();
         this.shuffleBoard();
     }
 
-    shuffleBoard(numberOfShuffles = 15 * this.rowsCount * this.columnsCount): void {
+    shuffleBoard(numberOfShuffles = 15 * this.gridSize * this.gridSize): void {
         for (let i = 0; i < numberOfShuffles; i++) {
             const options = this.getPossibleMoves();
 
@@ -23,39 +28,37 @@ export class Board {
     }
 
     getPossibleMoves(): number[] {
-        const emptyRow = getRowNumber(this.emptyFieldIndex, this.columnsCount);
-        const emptyColumn = getColumnNumber(this.emptyFieldIndex, this.columnsCount);
+        const emptyRow = getRowNumber(this.emptyFieldIndex, this.gridSize);
+        const emptyColumn = getColumnNumber(this.emptyFieldIndex, this.gridSize);
         const options = [];
 
-        if (getRowNumber(this.emptyFieldIndex - 1, this.columnsCount) === emptyRow)
-            options.push(this.emptyFieldIndex - 1);
-        if (getRowNumber(this.emptyFieldIndex + 1, this.columnsCount) === emptyRow)
-            options.push(this.emptyFieldIndex + 1);
+        if (getRowNumber(this.emptyFieldIndex - 1, this.gridSize) === emptyRow) options.push(this.emptyFieldIndex - 1);
+        if (getRowNumber(this.emptyFieldIndex + 1, this.gridSize) === emptyRow) options.push(this.emptyFieldIndex + 1);
         if (
-            this.emptyFieldIndex + this.columnsCount < this.columnsCount * this.rowsCount &&
-            getColumnNumber(this.emptyFieldIndex + this.columnsCount, this.columnsCount) === emptyColumn
+            this.emptyFieldIndex + this.gridSize < this.gridSize * this.gridSize &&
+            getColumnNumber(this.emptyFieldIndex + this.gridSize, this.gridSize) === emptyColumn
         )
-            options.push(this.emptyFieldIndex + this.columnsCount);
+            options.push(this.emptyFieldIndex + this.gridSize);
         if (
-            this.emptyFieldIndex - this.columnsCount >= 0 &&
-            getColumnNumber(this.emptyFieldIndex - this.columnsCount, this.columnsCount) === emptyColumn
+            this.emptyFieldIndex - this.gridSize >= 0 &&
+            getColumnNumber(this.emptyFieldIndex - this.gridSize, this.gridSize) === emptyColumn
         )
-            options.push(this.emptyFieldIndex - this.columnsCount);
+            options.push(this.emptyFieldIndex - this.gridSize);
         return options;
     }
 
     generetePuzzles(): void {
-        for (let i = 1; i < this.rowsCount * this.columnsCount; i++) {
-            const row = getRowNumber(i - 1, this.columnsCount);
-            const column = getColumnNumber(i - 1, this.columnsCount);
+        for (let i = 1; i < this.gridSize * this.gridSize; i++) {
+            const row = getRowNumber(i - 1, this.gridSize);
+            const column = getColumnNumber(i - 1, this.gridSize);
 
             const newPuzzle = new Puzzle(i, row, column);
             this.gameState.push(newPuzzle);
         }
 
-        const newPuzzle = new Puzzle(0, this.rowsCount - 1, this.columnsCount - 1);
+        const newPuzzle = new Puzzle(0, this.gridSize - 1, this.gridSize - 1);
         this.gameState.push(newPuzzle);
-        this.emptyFieldIndex = this.rowsCount * this.columnsCount - 1;
+        this.emptyFieldIndex = this.gridSize * this.gridSize - 1;
     }
 
     makeMove(index: number): void {
@@ -77,12 +80,12 @@ export class Board {
         this.gameState[index2] = tempPuzzle;
 
         this.gameState[index1].updatePosition({
-            x: getRowNumber(index1, this.columnsCount),
-            y: getColumnNumber(index1, this.columnsCount)
+            x: getRowNumber(index1, this.gridSize),
+            y: getColumnNumber(index1, this.gridSize)
         });
         this.gameState[index2].updatePosition({
-            x: getRowNumber(index2, this.columnsCount),
-            y: getColumnNumber(index2, this.columnsCount)
+            x: getRowNumber(index2, this.gridSize),
+            y: getColumnNumber(index2, this.gridSize)
         });
     }
 }
