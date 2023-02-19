@@ -6,14 +6,24 @@
 }
 
 body {
-    background-color: rgb(14, 14, 14);
+    background-color: rgb(45, 45, 45);
+}
+
+.cta-buttons {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    gap: 10px;
+}
+
+.app {
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
 #board {
-    margin-top: 40px;
+    margin-top: 15px;
     display: flex;
     flex-wrap: wrap;
     position: relative;
